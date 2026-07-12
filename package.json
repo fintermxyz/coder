@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node cli.js",
-    "gui": "electron gui/main.js",
+    "gui": "npm run gui:build && electron gui/main.js",
     "gui:dev": "vite -c gui/ui/vite.config.ts",
     "gui:build": "vite build -c gui/ui/vite.config.ts",
     "gui:typecheck": "tsc -p gui/ui/tsconfig.json --noEmit"

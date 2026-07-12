@@ -37,6 +37,8 @@ export interface CoderApi {
   resume(name: string): Promise<unknown>;
   servers(): Promise<ServerInfo[]>;
   newSession(): Promise<boolean>;
+  models(): Promise<string[]>;
+  setModel(id: string): Promise<string>;
   onEvent(cb: (e: AgentEvent) => void): () => void;
 }
 

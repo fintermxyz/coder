@@ -116,6 +116,22 @@ export class Agent extends EventEmitter {
     return true;
   }
 
+  // List models the active provider offers (LM Studio returns all downloaded ones).
+  async models() {
+    try { return await state.provider.listModels(); }
+    catch { return state.currentModel ? [state.currentModel] : []; }
+  }
+
+  // Switch the active model (rebuilds the provider with the new id).
+  setModel(id) {
+    if (!id || id === state.currentModel) return state.currentModel;
+    state.currentModel = id;
+    state.provider = createProvider(state.currentName, state.registry, id);
+    rebuildSystemPrompt();
+    this.emit("ready", { provider: state.currentName, model: state.currentModel, mode: state.mode });
+    return id;
+  }
+
   sessions() { return listSessions(); }
   save(name) { return saveSession(name || "default"); }
   resume(name) {

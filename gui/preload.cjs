@@ -8,6 +8,8 @@ contextBridge.exposeInMainWorld("coder", {
   setMode: (mode) => ipcRenderer.invoke("agent:setMode", mode),
   snapshot: () => ipcRenderer.invoke("agent:snapshot"),
   newSession: () => ipcRenderer.invoke("agent:new"),
+  models: () => ipcRenderer.invoke("agent:models"),
+  setModel: (id) => ipcRenderer.invoke("agent:setModel", id),
   sessions: () => ipcRenderer.invoke("agent:sessions"),
   save: (name) => ipcRenderer.invoke("agent:save", name),
   resume: (name) => ipcRenderer.invoke("agent:resume", name),

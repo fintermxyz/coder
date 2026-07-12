@@ -36,6 +36,7 @@ function diffLines(oldStr: string, newStr: string): JSX.Element[] {
 
 export function App() {
   const [ready, setReady] = useState<{ provider: string; model: string | null } | null>(null);
+  const [models, setModels] = useState<string[]>([]);
   const [mode, setMode] = useState<Mode>("build");
   const [items, setItems] = useState<Item[]>([]);
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -59,6 +60,7 @@ export function App() {
         case "ready":
           setReady({ provider: e.payload.provider, model: e.payload.model });
           setMode(e.payload.mode); refreshSessions();
+          api.models().then(setModels).catch(() => {});
           break;
         case "status": setStatus(e.payload); break;
         case "token":
@@ -183,7 +185,13 @@ export function App() {
                   <label class="chip toggle"><input type="checkbox" checked={auto} onChange={(e) => setAuto((e.target as HTMLInputElement).checked)} /> Auto-approve</label>
                 </div>
                 <div class="right">
-                  <span class="model-badge">{providerLine}</span>
+                  <select class="model-select" title="LM Studio model"
+                    value={ready?.model ?? ""}
+                    onChange={(e) => { const id = (e.target as HTMLSelectElement).value; setReady((r) => r ? { ...r, model: id } : r); api.setModel(id); }}>
+                    {(models.length ? models : (ready?.model ? [ready.model] : [])).map((m) => (
+                      <option value={m} key={m}>{m}</option>
+                    ))}
+                  </select>
                   <button class="send" onClick={send}>Send ⏎</button>
                 </div>
               </div>
