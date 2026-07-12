@@ -1,0 +1,23 @@
+{
+  "name": "coder",
+  "version": "1.0.0",
+  "description": "A colorful terminal coding agent that talks to any AI provider or local model, runs commands it suggests, and edits files — all with your approval.",
+  "type": "module",
+  "bin": {
+    "coder": "cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js",
+    "gui": "electron gui/main.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "openai": "^6.42.0",
+    "playwright": "^1.50.0"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11"
+  }
+}

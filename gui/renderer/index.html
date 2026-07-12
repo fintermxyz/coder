@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+  <title>coder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ── Sidebar ─────────────────────────────────────────────── -->
+    <aside id="sidebar">
+      <div class="side-drag"></div>
+      <div class="tabs">
+        <button class="tab active" data-view="chat">Chat</button>
+        <button class="tab" data-view="stats">Stats</button>
+      </div>
+
+      <button id="new-session" class="primary">＋ New session</button>
+
+      <nav class="nav">
+        <a data-nav="servers"><span class="ico">▣</span> Servers <span id="server-count" class="badge"></span></a>
+        <a data-nav="sessions"><span class="ico">🗂</span> Sessions</a>
+      </nav>
+
+      <div class="recents">
+        <div class="section-label">Recents</div>
+        <ul id="session-list"></ul>
+      </div>
+
+      <div class="side-footer">
+        <span id="mascot-mini" class="mascot"></span>
+        <div class="who">
+          <div class="brand">coder</div>
+          <div id="provider-line" class="muted">connecting…</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main ────────────────────────────────────────────────── -->
+    <main id="main">
+      <!-- Chat view -->
+      <section id="view-chat" class="view">
+        <div id="messages">
+          <div class="hero" id="hero">
+            <span id="mascot-hero" class="mascot"></span>
+            <h1 id="greeting">Hello</h1>
+            <p class="muted" id="subgreet">What should we build?</p>
+          </div>
+        </div>
+
+        <div class="composer">
+          <div id="status-line" class="status hidden"><span class="dot"></span><span id="status-text"></span></div>
+          <textarea id="input" rows="1" placeholder="Describe a task or ask a question…"></textarea>
+          <div class="composer-bar">
+            <div class="chips">
+              <span class="chip" id="cwd-chip" title="working directory">📁 …</span>
+              <button class="chip mode-pill" id="mode-pill" title="toggle build / plan">● build</button>
+              <label class="chip toggle"><input type="checkbox" id="auto" /> Auto-approve</label>
+            </div>
+            <div class="right">
+              <span class="model-badge" id="model-badge">…</span>
+              <button id="send" class="send" title="Send (⏎)">Send ⏎</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats view -->
+      <section id="view-stats" class="view hidden">
+        <div class="hero small">
+          <span id="mascot-hero2" class="mascot"></span>
+          <h1>Your coder stats</h1>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div class="panel">
+          <div class="section-label">Background servers</div>
+          <ul id="server-list" class="server-list"><li class="muted">none running</li></ul>
+        </div>
+        <div class="panel">
+          <div class="section-label">Todos</div>
+          <ul id="todo-list-stats" class="todo-list"><li class="muted">none</li></ul>
+        </div>
+        <p class="muted caption" id="stat-caption"></p>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
