@@ -8,7 +8,10 @@
   },
   "scripts": {
     "start": "node cli.js",
-    "gui": "electron gui/main.js"
+    "gui": "npm run gui:build && electron gui/main.js",
+    "gui:dev": "vite -c gui/ui/vite.config.ts",
+    "gui:build": "vite build -c gui/ui/vite.config.ts",
+    "gui:typecheck": "tsc -p gui/ui/tsconfig.json --noEmit"
   },
   "license": "ISC",
   "dependencies": {
@@ -18,6 +21,10 @@
     "playwright": "^1.50.0"
   },
   "devDependencies": {
-    "electron": "^33.4.11"
+    "@preact/preset-vite": "^2.9.0",
+    "electron": "^33.4.11",
+    "preact": "^10.24.0",
+    "typescript": "^5.6.0",
+    "vite": "^5.4.0"
   }
 }

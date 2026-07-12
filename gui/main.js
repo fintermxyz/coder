@@ -4,6 +4,7 @@
 
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
+import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { Agent } from "./agent.js";
 
@@ -32,7 +33,12 @@ function createWindow() {
       nodeIntegration: false,
     },
   });
-  win.loadFile(path.join(__dirname, "renderer", "index.html"));
+  // Dev: Vite dev server (HMR). Prod: the built Preact bundle. Fallback: the
+  // original vanilla renderer (kept so the app runs even before a gui:build).
+  const dist = path.join(__dirname, "renderer", "dist", "index.html");
+  if (process.env.CODER_DEV) win.loadURL("http://localhost:5178");
+  else if (fs.existsSync(dist)) win.loadFile(dist);
+  else win.loadFile(path.join(__dirname, "renderer", "index.html"));
 }
 
 function wireAgent() {
@@ -53,6 +59,8 @@ app.whenReady().then(() => {
   ipcMain.handle("agent:setMode", async (_e, mode) => agent.setMode(mode));
   ipcMain.handle("agent:snapshot", async () => agent.snapshot());
   ipcMain.handle("agent:new", async () => agent.newSession());
+  ipcMain.handle("agent:models", async () => agent.models());
+  ipcMain.handle("agent:setModel", async (_e, id) => agent.setModel(id));
   ipcMain.handle("agent:sessions", async () => agent.sessions());
   ipcMain.handle("agent:save", async (_e, name) => agent.save(name));
   ipcMain.handle("agent:resume", async (_e, name) => agent.resume(name));
